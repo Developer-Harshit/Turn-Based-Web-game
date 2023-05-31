@@ -105,17 +105,34 @@ button:disabled {
 }
 
 .log--player {
-  color: #7700ff;
+  color: #520dcb;
+  font-weight: bold;
 }
 
 .log--monster {
-  color: #da8d00;
+  color: #3ee3ac;
+  font-weight: bold;
 }
-
+.log--damage,
+.log--heal,
+.log--cooldown {
+  color: #ffefef;
+  border-radius: 20%;
+  font-weight: bold;
+  border: solid 1px;
+  text-shadow: 0px 0px 5px;
+  padding: 3px;
+}
 .log--damage {
-  color: red;
+  text-shadow: 0px 0px 5px rgba(150, 23, 40, 0.958);
+  border-color: rgba(150, 23, 40, 0.958);
 }
 
 .log--heal {
-  color: green;
+  text-shadow: 0px 0px 5px rgba(24, 145, 44, 0.703);
+  border-color: rgba(24, 145, 44, 0.703);
+}
+.log--cooldown {
+  text-shadow: 0px 0px 5px rgba(7, 57, 88, 0.627);
+  border-color: rgba(7, 57, 88, 0.627);
 }

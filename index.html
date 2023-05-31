@@ -6,8 +6,10 @@
     <title>Turn Based Game</title>
 
     <link rel="stylesheet" href="styles.css" />
+    <script src="/lib/p5.js"></script>
     <script src="/lib/vue.js"></script>
     <script src="app.js" defer></script>
+    <script src="sketch.js" defer></script>
   </head>
   <body>
     <header>
@@ -29,41 +31,67 @@
       </section>
       <section v-show="winner" class="container">
         <h2>Game Over</h2>
-        <h3 v-if="winner == 1">You Lost</h3>
-        <h3 v-else-if="winner==0">You Won</h3>
+        <h3 v-if="winner == '1'">You Lost</h3>
+        <h3 v-else-if="winner == '0'">You Won</h3>
         <h3 v-else>Its a draw</h3>
+        <button @click="resetGame">New Game</button>
       </section>
-      <section id="controls">
-        <button
-          :disabled="!(spzBuffer.player <= 2)"
-          @click="playMove('attack')"
-        >
+      <section v-if="!winner" id="controls">
+        <button :disabled="!(spzBuffer.player <= 2)" @click="move('attack')">
           ATTACK
         </button>
         <button
-          :disabled="!(spzBuffer.player <= 0)"
-          @click="playMove('spzAttack')"
+          :disabled="!(spzBuffer.player <= 0) "
+          @click="move('spzAttack')"
         >
           SPECIAL ATTACK
         </button>
         <button
-          :disabled="!(spzBuffer.player <= 2) || !(healBuffer.player <=0)"
-          @click="playMove('heal')"
+          :disabled="!(spzBuffer.player <= 2) || !(healBuffer.player <=0) "
+          @click="move('heal')"
         >
           HEAL
         </button>
 
-        <button
-          :disabled="(spzBuffer.player <= 2)"
-          @click="playMove('nothing')"
-        >
+        <button :disabled="(spzBuffer.player <= 2) " @click="move('nothing')">
           DO NOTHING
         </button>
-        <button>SURRENDER</button>
+        <button :disabled="winner" @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="msg in battleLog">
+            <h3>{{'Round : '+ msg.round}}</h3>
+
+            <p>
+              <span class="log--player"> Player </span>
+              <span> {{msg.player.text}} </span>
+              <span
+                v-if="msg.player.type != 'cooldown'"
+                :class="'log--' + msg.player.type"
+              >
+                {{msg.player.value + ' points'}}
+              </span>
+              <span v-else :class="'log--' + msg.player.type">
+                {{msg.player.value + ' turn'}}
+              </span>
+            </p>
+            <p>
+              <span class="log--monster"> Monster </span>
+              <span> {{msg.monster.text}} </span>
+              <span
+                v-if="msg.monster.type != 'cooldown'"
+                :class="'log--' + msg.monster.type"
+              >
+                {{msg.monster.value + ' points'}}
+              </span>
+              <span v-else :class="'log--' + msg.monster.type">
+                {{msg.monster.value + ' turn'}}
+              </span>
+            </p>
+          </li>
+        </ul>
       </section>
     </div>
   </body>
