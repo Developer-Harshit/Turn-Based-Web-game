@@ -3,7 +3,7 @@
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
 }
 
 body {
@@ -18,7 +18,9 @@ header {
   text-align: center;
   margin-bottom: 2rem;
 }
-
+h2 {
+  text-align: center;
+}
 section {
   width: 90%;
   max-width: 40rem;
